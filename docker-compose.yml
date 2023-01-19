@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+        api:
+            container_name: 'FastAPIBE'
+            build:
+                    context: .
+                    dockerfile: Dockerfile
+            ports:
+                - "2701:2701"
+            volumes:
+                - .:/app/
+            depends_on:
+                - db
+            restart: always
+        db:
+            container_name: PostgreSQLDB
+            environment:
+                - POSTGRES_PASSWORD=alqinsi123
+                - POSTGRES_USER=alqinsi
+                - POSTGRES_DB=jds-bi-stunting
+                - PGDATA=/var/lib/postgresql/data/pgdata
+            volumes:
+                - './:/var/lib/postgresql/data'
+            image: postgres
+            ports:
+                - '5432:5432'
+            expose:
+                - 5432
+
