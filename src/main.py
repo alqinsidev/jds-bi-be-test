@@ -7,19 +7,27 @@ from .database import get_db
 from .models import Data_Stunting
 from .response import OK,NOT_FOUND,UNAUTHORIZED
 from .middleware import tokenCheck
+from fastapi.security import HTTPBearer
+from fastapi.testclient import TestClient
 
+auth_scheme = HTTPBearer()
 app = FastAPI()
+tc = TestClient(app)
 
-@app.get('/', dependencies=[Depends(tokenCheck)])
+@app.get('/')
 def index():
     return {"Hello":"Python"}
 
-@app.get('/stunting')
+@app.get('/protected',dependencies=[Depends(tokenCheck),Depends(auth_scheme)])
+def protectedRoute():
+    return {"Hello":"Python"}
+
+@app.get('/stunting',dependencies=[Depends(tokenCheck),Depends(auth_scheme)],tags=["Data"], summary='Get all available data')
 def stunting(db: Session = Depends(get_db)):
     result = db.query(Data_Stunting).all()
     return OK(result)
 
-@app.get('/stunting/kabupaten-kota/{id}')
+@app.get('/stunting/kabupaten-kota/{id}', tags=["Data"])
 async def getSingleData(id:int, db: Session = Depends(get_db)):
     result = db.query(Data_Stunting).filter(Data_Stunting.kode_kabupaten_kota == id).all();
     if result != None and len(result) != 0:
@@ -27,7 +35,7 @@ async def getSingleData(id:int, db: Session = Depends(get_db)):
     else:
         return NOT_FOUND()
 
-@app.post('/upload-bulk')
+@app.post('/upload-bulk', tags=["Data"])
 def insert_bulk(file: UploadFile = File(...),db: Session = Depends(get_db)):
     added = 0
     updated = 0
