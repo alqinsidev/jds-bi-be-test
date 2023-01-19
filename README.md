@@ -61,9 +61,8 @@ Retrieve Kabupaten / Kota with higest stunting number per year
 
 Service entry point can be found [here](http://18.142.250.106:2701/).
 
-Service documentation can be found [here](http://18.142.250.106:2701/docs). Please use this word as Bearer token for every protected Route.
+Service documentation can be found [here](http://18.142.250.106:2701/docs). Please use `token-jabar-juara` as Bearer token for every protected Route.
 
-`token-jabar-juara`
 
 ## To Do
 
