@@ -72,3 +72,8 @@ This application is prematurly deployed, so many things need to upgrade on this 
 - Environment management
 - Project Folder Structure
 - Implementing JWT Bearer / OAuth rather than dummy token
+
+
+## Data Source
+
+All data on this service are provided by [opendata.jabarprov.go.id](https://opendata.jabarprov.go.id/id/dataset/jumlah-balita-stunting-berdasarkan-kabupatenkota-di-jawa-barat)
